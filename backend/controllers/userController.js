@@ -53,14 +53,10 @@ export const login = async (req,res)=>{
 
 export const getallusers=async(req,res)=>{
     try {
-        const users = await userModel.find()
-    if(users.length==0){
-        return res.status(201).json({message:"no users"})
-    }
-    return res.status(201).json({users})
+        const users = await userModel.find({role:'user'})
+    return res.status(200).json(users)
     } catch (error) {
-        
-        
+        return res.status(500).json({message:"server error"})
     }
 
 }

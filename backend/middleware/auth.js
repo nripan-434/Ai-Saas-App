@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken'
 import userModel from '../models/userModel.js'
-export const verifytoken = async (req,res,next) =>{
+export const authmiddleware = async (req,res,next) =>{
     try {
         const authheader = req.headers.authorization
     if(!authheader || !authheader.startsWith('Bearer '))return res.status(401).json({message:"Access denied , login"})
