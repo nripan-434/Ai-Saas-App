@@ -4,8 +4,8 @@ import jwt from 'jsonwebtoken'
 
 export const userRegister =async (req,res)=>{
     try {
-        const {name,email,password,role} = req.body
-    if(!name||!email||!password||!role){
+        const {name,email,password} = req.body
+    if(!name||!email||!password){
         return  res.status(400).json({message:"Fill All Fields"})
     }
     const exist = await userModel.findOne({email})
@@ -15,9 +15,9 @@ export const userRegister =async (req,res)=>{
     const salt=await bcrypt.genSalt(10)
     const hashedpass= await bcrypt.hash(password,salt) 
     const user = await userModel.create({
-        name,email,password:hashedpass,role
+        name,email,password:hashedpass
     })
-    return res.status(201).json({message:"Registered successfully",user})
+    return res.status(201).json({message:"Registered successfully",user: {id: user._id,name: user.name,email: user.email,role: user.role}})
     } catch (error) {
         console.log(error)
         return res.status(500).json({message:"server error"})
@@ -36,14 +36,31 @@ export const login = async (req,res)=>{
     if(!pass){
         return res.status(400).json({message:"Invalid Credentials"})
     }
-    const token = jwt.sign({id:exist._id},process.env.SECRET_KEY)
+    const token = jwt.sign({id:exist._id},process.env.SECRET_KEY,{expiresIn:'7d'})
     const currentuser={
-        user:exist        
+        name:exist.name,
+        id:exist._id,
+        email:exist.email,
+        role:exist.role       
     }
     return res.status(200).json({message:"Logged in successfully",token,currentuser})
    } catch (error) {
     console.log(error)
     return res.status(500).json({message:"server error"})
    }
+
+}
+
+export const getallusers=async(req,res)=>{
+    try {
+        const users = await userModel.find()
+    if(users.length==0){
+        return res.status(201).json({message:"no users"})
+    }
+    return res.status(201).json({users})
+    } catch (error) {
+        
+        
+    }
 
 }
