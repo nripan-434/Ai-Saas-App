@@ -10,6 +10,7 @@ const Navbar = () => {
         </div>
         <div className='flex gap-3'>
             <Link to={'/login'}>Sign in</Link>
+            <Link to={'/register'}>Register</Link>
             
         </div>
       </div>

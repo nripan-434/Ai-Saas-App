@@ -8,14 +8,15 @@ export const userRegister =async (req,res)=>{
     if(!name||!email||!password){
         return  res.status(400).json({message:"Fill All Fields"})
     }
-    const exist = await userModel.findOne({email})
+    const loweremail=email.toLoweCase()
+    const exist = await userModel.findOne({loweremail})
     if(exist){
         return res.status(409).json({message:"email already registered"})
     }
     const salt=await bcrypt.genSalt(10)
     const hashedpass= await bcrypt.hash(password,salt) 
     const user = await userModel.create({
-        name,email,password:hashedpass
+        name,email:loweremail,password:hashedpass
     })
     return res.status(201).json({message:"Registered successfully",user: {id: user._id,name: user.name,email: user.email,role: user.role}})
     } catch (error) {
