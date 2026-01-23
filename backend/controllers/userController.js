@@ -8,8 +8,8 @@ export const userRegister =async (req,res)=>{
     if(!name||!email||!password){
         return  res.status(400).json({message:"Fill All Fields"})
     }
-    const loweremail=email.toLoweCase()
-    const exist = await userModel.findOne({loweremail})
+    const loweremail=email.toLowerCase()
+    const exist = await userModel.findOne({email:loweremail})
     if(exist){
         return res.status(409).json({message:"email already registered"})
     }
