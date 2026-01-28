@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import toast from 'react-hot-toast';
+import api from '../api/axios';
 import axios from 'axios'
 
 const initialState = {
@@ -10,7 +11,7 @@ const initialState = {
 }
 export const registeruser = createAsyncThunk('post/registeruser', async (form, { rejectWithValue }) => {
     try {
-        const res = await axios.post('http://localhost:5000/user/register', form)
+        const res = await api.post('/user/register', form)
         return res.data
     } catch (error) {
         return rejectWithValue(error.response.data)
@@ -19,7 +20,7 @@ export const registeruser = createAsyncThunk('post/registeruser', async (form, {
 })
 export const login = createAsyncThunk('post/login',async(form,{rejectWithValue})=>{
         try {
-            const res = await axios.post('http://localhost:5000/user/login',form)
+            const res = await api.post('/user/login',form)
         return res.data
         } catch (error) {
             return rejectWithValue(error.response.data)
