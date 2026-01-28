@@ -36,7 +36,7 @@ const Register = () => {
             </div>
             <div className='flex flex-col gap-2 w-full'>
                 <label htmlFor="">Password</label>
-                <input onChange={handleinput} name='password' value={form.password} className='outline-1 rounded-md p-2 hover:outline-slate-500' type="text" placeholder='••••••••' />
+                <input onChange={handleinput} name='password' value={form.password} className='outline-1 rounded-md p-2 hover:outline-slate-500' type="password" placeholder='••••••••' />
 
             </div>
             <div className='w-full flex justify-center mt-4'>

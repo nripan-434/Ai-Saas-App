@@ -3,8 +3,8 @@ import toast from 'react-hot-toast';
 import axios from 'axios'
 
 const initialState = {
-    user: JSON.parse(localStorage.getItem('user')) || null,
-    token: JSON.parse(localStorage.getItem('token')) || null,
+    user: JSON.parse(sessionStorage.getItem('user')) || null,
+    token: JSON.parse(sessionStorage.getItem('token')) || null,
     status: 'success'
 
 }
@@ -27,9 +27,17 @@ export const login = createAsyncThunk('post/login',async(form,{rejectWithValue})
 })
 
 export const AuthSlice = createSlice({
-    name: 'user',
+    name: 'auth',
     initialState,
     reducers: {
+      logout: (state) => {
+        state.user = null
+        state.token = null
+        state.status = 'success'
+
+        sessionStorage.removeItem('user')
+        sessionStorage.removeItem('token')
+    }
 
     },
     extraReducers(builder){
@@ -51,10 +59,13 @@ export const AuthSlice = createSlice({
             state.status='pending'
         })
         .addCase(login.fulfilled,(state,action)=>{
-            state.status='pending'
-            toast.success(action.payload.message)
-            state.user=action.payload.user
+            state.status='success'
+            state.user=action.payload.currentuser
             state.token=action.payload.token
+            sessionStorage.setItem('user',JSON.stringify(action.payload.currentuser))
+            sessionStorage.setItem('token',JSON.stringify(action.payload.token))
+            toast.success(action.payload.message)
+            
         })
         .addCase(login.rejected,(state,action)=>{
             state.status='rejected'
@@ -64,5 +75,6 @@ export const AuthSlice = createSlice({
     }
 
 })
+export const { logout } = AuthSlice.actions
 
 export default AuthSlice.reducer
