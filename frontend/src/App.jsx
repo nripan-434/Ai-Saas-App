@@ -9,9 +9,9 @@ import Userhome from './pages/Userhome'
 import ProtectedRoutes from './components/ProtectedRoutes'
 const App = () => {
   return (
-    <div className='flex flex-col min-h-screen'>
+    <div className='flex flex-col min-h-screen '>
       <Navbar/>
-      <div className='flex-grow'>
+      <div className='mt-28 flex-grow '>
         <Routes>
         <Route path='/' element={<Landing/>}/>
         <Route path='/login' element={<Login/>}/>

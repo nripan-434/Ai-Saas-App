@@ -6,8 +6,9 @@ const Navbar = () => {
   const  {user}=useSelector(x=>x.auth)
   const dispatch=useDispatch()
   return (
-      <div>
-      <div className='h-20 z-50 shadow   top-0 bg-[#CBCBCB] flex justify-between items-center p-6 '>
+    
+      <div className='relative  '>
+      <div className='h-20 absolute m-3 shadow-xl  inset-x-4 fixed z-50 shadow rounded-4xl   top-0 bg-transparent backdrop-blur flex justify-between items-center p-6 '>
         <div>
            <h1 className='font-(--font-comic)'></h1> Home
         </div>
