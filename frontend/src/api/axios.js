@@ -12,5 +12,15 @@ api.interceptors.request.use((config)=>{
 },
 (error)=>Promise.reject(error)
 )
+api.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    const message =
+      error.response?.data?.message ||
+      error.message ||
+      'Something went wrong';
 
+    return Promise.reject({message});
+  }
+);
 export default api
